@@ -91,7 +91,7 @@
       #buttons {
         display: inline-block;
         text-align: center;
-        margin-left: 42%;
+        margin-left: 32%;
         position: absolute;
         bottom: 5px;
       }
@@ -221,6 +221,7 @@
 
       <div id="buttons">
         <button class="save">Save</button>
+        <button class="logout" onclick="logout()">LogOut</button>
       </div>
     </div>
 
@@ -317,5 +318,19 @@
         userTodoData.shift();
         ajaxPost(userTodoData);
       });
+
+      function logout() {
+        let ourRequest = new XMLHttpRequest();
+        ourRequest.open('get', '/', true);
+        ourRequest.onload = function () {
+          if (ourRequest.readyState === 4 && ourRequest.status === 200) {
+
+            window.location.href = "/"
+            return;
+          }
+        }
+
+        ourRequest.send();
+      }
     </script>
   </body>

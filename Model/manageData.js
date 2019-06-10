@@ -51,15 +51,13 @@ async function checkLoginData(login) {
         reject(err);
       }
 
-      let arrayOfObjects = JSON.parse(data);
-
-
+      let userJSONdata = JSON.parse(data);
       let {
         id,
         password
       } = login;
 
-      let userData = arrayOfObjects['user'];
+      let userData = userJSONdata['user'];
 
       for (let i = 0; i < userData.length; i++) {
         if ((userData[i].id === id) && (userData[i].password === password)) {
@@ -79,9 +77,9 @@ async function storeUser() {
         reject(err);
       }
 
-      let get_JSON_User_data = JSON.parse(data);
-      let userInfo = get_JSON_User_data['user'];
-      let user_Id_array = userInfo.map((data) => {
+      let userJSONdata = JSON.parse(data);
+      let userData = userJSONdata['user'];
+      let user_Id_array = userData.map((data) => {
         return {
           userId: data.id
         }
@@ -96,8 +94,8 @@ async function storeTodoData(userTodoData, userId) {
   return new Promise((resolve, reject) => {
     fs.readFile('../Model/user.json', 'utf-8', (err, data) => {
 
-      let get_JSON_User_data = JSON.parse(data);
-      let userInfo = get_JSON_User_data['user'];
+      let userJSONdata = JSON.parse(data);
+      let userInfo = userJSONdata['user'];
       let parse_userTodoData = JSON.parse(userTodoData);
 
       for (i = 0; i < userInfo.length; i++) {
@@ -105,7 +103,7 @@ async function storeTodoData(userTodoData, userId) {
           userInfo[i].todolist = parse_userTodoData;
         }
       }
-      fs.writeFile('../Model/user.json', JSON.stringify(get_JSON_User_data), 'utf-8', (err) => {
+      fs.writeFile('../Model/user.json', JSON.stringify(userJSONdata), 'utf-8', (err) => {
         if (err) {
           reject(err);
         }
@@ -123,8 +121,8 @@ async function getStoredTodoData(userId) {
         reject(err);
       }
 
-      let get_JSON_User_data = JSON.parse(data);
-      let userInfo = get_JSON_User_data['user'];
+      let userJSONdata = JSON.parse(data);
+      let userInfo = userJSONdata['user'];
       for (let i = 0; i < userInfo.length; i++) {
         if (userInfo[i].id === userId) {
           resolve(userInfo[i].todolist);

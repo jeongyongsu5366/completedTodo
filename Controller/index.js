@@ -3,6 +3,7 @@ const app = router();
 const port = 4000;
 const manageData = require('../Model/manageData');
 
+// Post Homepage
 app.post('/', (req, res) => {
   req.on('data', async function (data) {
     const loginData = JSON.parse(data);
@@ -16,7 +17,7 @@ app.post('/', (req, res) => {
   });
 });
 
-
+// Post Singup-Page
 app.post('/signup', (req, res) => {
   req.on('data', async function (input_from_signup) {
     const input_data = JSON.parse(input_from_signup);
@@ -31,6 +32,7 @@ app.post('/signup', (req, res) => {
   });
 });
 
+// Post Get UserId from parameters
 app.post('/:userId', (req, res) => {
   req.on('data', async function (userTodoData) {
     const userIDlist = await manageData.storeUser();
@@ -52,19 +54,23 @@ app.post('/:userId', (req, res) => {
   });
 });
 
+// Get Signup-Page
 app.get('/signup', (req, res) => {
 
   res.send('../View/signup.html');
 });
 
+// Get todolist-Page
 app.get('/todolist', (req, res) => {
   res.send('../View/todolist.html');
 });
 
+// Get Homepage
 app.get('/', (req, res) => {
   res.send('../View/homepage.html');
 });
 
+// Get UserId from parameters
 app.get('/:userId', async function (req, res) {
   const userIDlist = await manageData.storeUser();
   const user = userIDlist.find(user => user.userId === req.params.userId);
